@@ -1,5 +1,8 @@
 #' @import WindR
+#' @importFrom caTools base64encode
 #' @import data.table
+#' @importFrom magrittr %>%
+#' @export %>%
 NULL
 
 
@@ -25,6 +28,11 @@ NULL
 
 # isConnection <- function()  { w.isconnected() }
 
+
+
+#' connection
+#'
+#' @export
 wind.start = function(){
   if (!w.isconnected()) w.start(showmenu = FALSE)
 }
