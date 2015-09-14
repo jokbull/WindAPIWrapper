@@ -5,6 +5,20 @@
 #' @export %>%
 NULL
 
+## TODO :
+# #1. filters -- nan/date/?
+# 2. subscriber: R mode or KDB-TP mode?
+# 3. utils: dateconvert, rename the colnames etc.
+# *4. Improve the performance of cache function -- done
+# *5. Add help for wsd/wsi/wss param lists. -- done
+# 6. MongoDB? convert R object to JSON
+
+
+
+
+
+
+
 
 .onAttach = function(libname, pkgname) {
   packageStartupMessage("Welcome to my WindAPI Wrapper.\nThe cache folder is c:/myCache")
@@ -74,6 +88,37 @@ wind.fetchData = function(command, param, limit = 9,
   } else {
     stop("param should be a list or string")
   }
+
+  # check the options
+
+  switch(commandstr,
+    w.wsd = {
+      if (any(!c("codes","fields","beginTime","endTime") %in% names(param))) {
+        stop("wsd param consist of codes, fields, beginTime, endTime and options")
+      }
+    },
+    w.wset = {
+      if (!"tablename" %in% names(param)) {
+        stop("wset consists of tablename")
+      }
+    },
+    w.wsi = {
+      stopifnot(c("codes","fields","beginTime","endTime") %in% names(param))
+      #       {
+      #         stop("wsi param consist of codes, fields, beginTime, endTime and options")
+      #       }
+    },
+    w.wsq = {
+      stopifnot(c("codes","fields") %in% names(param))
+    },
+    w.wss = {
+      if (any(!c("codes","fields") %in% names(param))) {
+        stop("wss param consist of codes, fields, and options")
+      }
+    },
+    w.wst = stopifnot(c("codes","fields","beginTime","endTime") %in% names(param))
+  )
+
 
   wind_i = 1
   while(wind_i < limit) {

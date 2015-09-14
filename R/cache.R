@@ -13,11 +13,11 @@ cache = function(func,param,readFlag=TRUE,writeFlag=TRUE){
   # text file
   key  = deparse(param,width.cutoff=500,nlines = 1)
   file = file.path("c:/myCache",paste0(encode(c(func,key)) ,".RData"))
-  if (file.exists(file)) load(file) else cacheText = list()
 
   # read mode
   if (readFlag) {
       if ( key %in% names(cacheContent)) {
+        load(file)
         if (key %in% names(cacheText)) {
           return(cacheText[[key]])
         } else {
@@ -32,8 +32,9 @@ cache = function(func,param,readFlag=TRUE,writeFlag=TRUE){
 
   # write mode
   if (writeFlag) {
+    cacheText = list()
     cacheContent[[key]] = Sys.Date()
-    cacheText[[key]]    = result
+    cacheText[[key]] = result
     save(cacheContent,file=contentfile)
     save(cacheText,file=file)
   }

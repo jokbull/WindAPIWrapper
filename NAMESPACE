@@ -2,8 +2,8 @@
 
 export("%>%")
 export(cache)
-export(filter.amt_nan)
 export(filter.date)
+export(filter.nan)
 export(wind.fetchData)
 export(wind.start)
 export(wind.subscribe)
