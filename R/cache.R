@@ -1,5 +1,7 @@
 #' Cache the functino results.
 #'
+#' @description the default cache folder is c:/myCache
+#'
 #' @export
 cache = function(func,param,readFlag=TRUE,writeFlag=TRUE){
 
